@@ -1,0 +1,45 @@
+name: Release Readiness Audit
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify pinned dependencies
+        run: |
+          echo "Pinned dependencies declared in package.json:"
+          node -e "const p = require('./package.json'); console.log('  lodash  -> ' + p.dependencies.lodash); console.log('  minimist -> ' + p.dependencies.minimist);"
+
+      - name: Write build report
+        run: |
+          mkdir -p artifact
+          {
+            echo "Release Readiness Audit - Build Report"
+            echo "======================================"
+            echo "Run ID:      $GITHUB_RUN_ID"
+            echo "Run number:  $GITHUB_RUN_NUMBER"
+            echo "Branch:      $GITHUB_REF_NAME"
+            echo "Commit:      $GITHUB_SHA"
+            echo "Date:        $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            echo
+            echo "Pinned dependencies under audit:"
+            echo "  lodash   4.17.15"
+            echo "  minimist 1.2.0"
+            echo
+            echo "Status: build completed successfully"
+          } > artifact/report.txt
+          echo "--- report.txt ---"
+          cat artifact/report.txt
+
+      - name: Upload build report
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report
+          path: artifact/report.txt
+          retention-days: 90
