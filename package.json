@@ -1,0 +1,14 @@
+{
+  "name": "release-readiness-audit",
+  "version": "1.0.0",
+  "description": "Staging repository for a release-readiness security audit of a Node.js tool being open-sourced",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test suite yet\" && exit 0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "4.17.15",
+    "minimist": "1.2.0"
+  }
+}
