@@ -1,0 +1,20 @@
+name: Release Audit CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Release Audit CI: build job"
+          echo "  event : ${{ github.event_name }}"
+          echo "  ref   : ${{ github.ref_name }}"
+          echo "  commit: ${{ github.sha }}"
+          echo "Build completed successfully."
