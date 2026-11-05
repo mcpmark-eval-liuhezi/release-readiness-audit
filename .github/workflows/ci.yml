@@ -1,4 +1,4 @@
-name: Release Audit CI
+name: CI
 
 on:
   push:
@@ -8,13 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
-      - name: Build
+      - uses: actions/checkout@v4
+      - name: Verify
         run: |
-          echo "Release Audit CI: build job"
-          echo "  event : ${{ github.event_name }}"
-          echo "  ref   : ${{ github.ref_name }}"
-          echo "  commit: ${{ github.sha }}"
-          echo "Build completed successfully."
+          echo "Running trivial verification for the Gibson release CI"
+          echo "OK"
